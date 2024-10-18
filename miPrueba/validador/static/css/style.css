@@ -1,0 +1,17 @@
+body    {
+    background-color: rgb(183, 183, 183);
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 20px; /* Puedes ajustar el margen lateral */
+}
+
+.form-container {
+    width: 80%; /* Ajusta el ancho que prefieras */
+}
+
+.ui.clearing.segment {
+    overflow: auto !important; /* Asegura que los elementos flotados se muestren correctamente */
+}

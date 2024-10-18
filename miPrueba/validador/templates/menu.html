@@ -1,0 +1,121 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>menu</title>
+    <!-- Enlaces a Semantic UI y jQuery -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet"
+        type="text/css" />
+    <link
+        href="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.css"
+        rel="stylesheet" type="text/css" />
+    <script
+        src="https://cdn.rawgit.com/mdehoog/Semantic-UI/6e6d051d47b598ebab05857545f242caf2b4b48c/dist/semantic.min.js"></script>
+
+    <!-- Enlace a tu propio CSS (si tienes estilos personalizados en 'menu.css') -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<script>
+    $(document).ready(function () {
+        // Agrega el comportamiento del menú
+        $('.ui.menu a.item').on('click', function () {
+            $(this).addClass('active').siblings().removeClass('active');
+        });
+    });
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $('#calendar').calendar({
+            type: 'date',
+            formatter: {
+                date: function (date, settings) {
+                    if (!date) return '';
+                    var day = ('0' + date.getDate()).slice(-2);
+                    var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                    var year = date.getFullYear();
+                    return year + '-' + month + '-' + day;  // Forzando formato yyyy-MM-dd
+                }
+            }
+        });
+    });
+</script>
+
+<body>
+    <div class="ui clearing segment">
+        <h3 class="ui right floated header">
+            ADRES
+        </h3>
+
+    </div>
+
+    <div class="ui pointing menu">
+        <a class="active item" data-segment="segment1">
+            Navegar
+        </a>
+
+        <!-- <a class="item" data-segment="segment2">
+            Archivos
+        </a>
+
+        <a class="item" data-segment="segment3">
+            Biblioteca
+        </a> -->
+
+        <!-- <div class="right menu">
+            <div class="item">
+                <div class="ui transparent icon input">
+                    <input type="text" placeholder="Busqueda de documentos....">
+                    <i class="search link icon"></i>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <div class="form-wrapper">
+        <div class="form-container">
+            {% block content %}
+
+            <!-- en esta sección se coloca la información -->
+
+            {% endblock %}
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Script para cambiar el estado "active" y mostrar el segmento correspondiente -->
+    <script>
+        // Seleccionamos todos los items del menú
+        const menuItems = document.querySelectorAll('.ui.menu .item');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remover la clase 'active' de todos los items
+                menuItems.forEach(i => i.classList.remove('active'));
+
+                // Añadir la clase 'active' al item clicado
+                item.classList.add('active');
+
+                // Ocultar todos los segmentos relacionados
+                document.querySelectorAll('.content-segment').forEach(segment => {
+                    segment.style.display = 'none';
+                });
+
+                // Mostrar el segmento asociado al item clicado
+                const segmentId = item.getAttribute('data-segment');
+                document.getElementById(segmentId).style.display = 'block';
+            });
+        });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+{% extends "menu.html" %}
+
+{% block content %}
+
+Navegar
+<div id="segment1" class="ui segment content-segment">
+    <p>Contenido de Navegar</p>
+    <form class="ui form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if errors %}
+        <div class="ui message red">
+            <ul>
+                {% for error in errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+
+        <div id="pdfInput" class="eight wide column">
+            <label>Sube tu archivo PDF</label>
+            <div class="ui fluid input" data-tooltip="Documento" data-position="top left" data-inverted="">
+                <input type="file" name="file" id="file" accept=".txt">
+            </div>
+        </div>
+        <br>
+        <div class="sixteen wide column center aligned">
+            <button type="submit" class="ui right floated button">Enviar</button>
+        </div>
+    </form>
+    <br><br>
+    <div class="ui horizontal divider">
+        Tabla
+    </div>
+    <div class="ui hidden divider"></div>
+
+    <table class="ui celled table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Tipo de Documento</th>
+                <th>Docuemnto</th>
+                <th>Otro</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in documento %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.tipo_doc }}</td>
+                <td>{{ item.valor }}</td>
+                <td>{{ item.epigrafe }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No se encontraron documentos.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function toggleInput() {
+            const uploadOption = document.getElementById('uploadOption').value;
+            const pdfInput = document.getElementById('pdfInput');
+            const linkInput = document.getElementById('linkInput');
+
+            if (uploadOption === 'pdf') {
+                pdfInput.style.display = 'block';
+                linkInput.style.display = 'none';
+            } else {
+                pdfInput.style.display = 'none';
+                linkInput.style.display = 'block';
+            }
+        }
+    </script>
+
+    <script>
+        $('.ui.dropdown').dropdown();
+
+    </script>
+
+    {% endblock %}
